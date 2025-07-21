@@ -166,11 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e603bafa0dce84decad306770481769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballRadius: 0.09
+  ballRadius: 0.08
   speed: 5
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 0
+  ballCount: 0
+  material: {fileID: 2100000, guid: b5a9dc91c53d942dcbe3f629a9c08e65, type: 2}
 --- !u!1 &308683841
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &308683842
 RectTransform:
   m_ObjectHideFlags: 0
@@ -310,7 +309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &496020866
 RectTransform:
   m_ObjectHideFlags: 0
@@ -568,7 +567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &535486099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -885,11 +884,11 @@ GameObject:
   - component: {fileID: 862599040}
   m_Layer: 3
   m_Name: Ball
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &862599034
 RectTransform:
   m_ObjectHideFlags: 0
@@ -979,7 +978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1236387994
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1113,7 +1112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bmc: {fileID: 0}
   timeWindow: 10
-  ballsToAdd: 100
+  ballsToAdd: 500
   totalRunsForAverage: 5
   runResults: 
   delay: 0

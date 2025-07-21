@@ -44,7 +44,7 @@ public class BallMovementController : MonoBehaviour
         Ball = 3
     }
 
-    void Start()
+    void Awake()
     {
         collisionMask = ~LayerMask.GetMask("Ball");
         ballPrefab = GameObject.Find("Canvas/Ball");
@@ -53,9 +53,9 @@ public class BallMovementController : MonoBehaviour
             new(ballPrefab.transform)
         };
         ++ballCount;
-        // SendInRandomDirection(balls[0]);
-        balls[0].currentPosition = new Vector2(0, 0f);
-        SendInDirection(balls[0], new Vector2(1, 0.05f));
+        balls[0].currentPosition = Vector2.zero;
+        balls[0].UpdatePosition();
+        SendInRandomDirection(balls[0]);
     }
     public void SpawnNewBall()
     {
@@ -94,13 +94,15 @@ public class BallMovementController : MonoBehaviour
             ball.ballTransform.gameObject.SetActive(false);
         }
 
-        balls[0].currentPosition = Vector2.zero;
         ballCount = 1;
         SendInRandomDirection(balls[0]);
-        Time.timeScale = 0.1f;
+        balls[0].currentPosition = Vector2.zero;
+        balls[0].timeToSkip = 0;
     }
     void FixedUpdate()
     {
+        if (Time.time < 0.1f) return;
+
         float moveDistance = speed * Time.fixedDeltaTime;
         RaycastHit2D[] res = new RaycastHit2D[1];
         for (int i = 0; i < ballCount; ++i)
@@ -123,14 +125,14 @@ public class BallMovementController : MonoBehaviour
                 layerMask: collisionMask // Exclude Ball layer
             );
 
-            if (hits == 0 || (res[0].distance > ballRadius + moveDistance && res[0].distance < ballRadius * 2))
+            if (res[0].distance > ballRadius + moveDistance && res[0].distance < ballRadius * 3)
             {
                 MoveBall(currentBall, moveDistance, velNorm);
                 continue; // No collision detected, exit early
             }
-            else if (res[0].distance > ballRadius * 2)
+            else if (hits == 0 || res[0].distance >= ballRadius * 3)
             {
-                currentBall.timeToSkip = (res[0].distance - ballRadius * 2) / speed;
+                currentBall.timeToSkip = (res[0].distance - (ballRadius * 3)) / speed;
                 MoveBall(currentBall, moveDistance, velNorm);
                 continue;
             }
@@ -210,11 +212,13 @@ public class BallMovementController : MonoBehaviour
         ).normalized;
 
         ball.currentVelocity = initialDirection * speed;
+        ball.timeToSkip = 0;
     }
 
     public void SendInDirection(BallData ball, Vector2 dir)
     {
         ball.currentVelocity = dir.normalized * speed;
+        ball.timeToSkip = 0;
     }
     
     public int GetBallCount() { return ballCount; }
